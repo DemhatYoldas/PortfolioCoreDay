@@ -7,7 +7,7 @@ namespace PortfolioCoreDay.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-JQG1QG1;Initial Catalog=PortfolioDayDb;integrated security=true;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-JQG1QG1\\SQLEXPRESS;Initial Catalog=PortfolioDayDb;integrated security=true;trust server certificate=True;");
         }
 
         public DbSet<Education> Educations { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace PortfolioCoreDay.Entities
 {
-    public class Services
+    public class Service
     {
         public int ServiceId { get; set; }
         public String Title { get; set; }

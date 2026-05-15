@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<h1>İstatistikler</h1>
+
+<div class="alert alert-primary">Toplam Yetenek Sayısı:  @ViewBag.vCount</div>
+<div class="alert alert-success">Yeteneklerin Toplam Değeri :  @ViewBag.vSum</div>
+<div class="alert alert-light">Yeteneklerin Ortalama Değeri : @ViewBag.vAvg</div>
+<div class="alert alert-danger">80'den Büyük yetenek Sayısı : @ViewBag.vMax</div>

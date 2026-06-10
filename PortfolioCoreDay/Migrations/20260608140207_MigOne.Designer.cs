@@ -12,8 +12,8 @@ using PortfolioCoreDay.Context;
 namespace PortfolioCoreDay.Migrations
 {
     [DbContext(typeof(PortfolioContext))]
-    [Migration("20260513143307_MigrationMig")]
-    partial class MigrationMig
+    [Migration("20260608140207_MigOne")]
+    partial class MigOne
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,23 @@ namespace PortfolioCoreDay.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("PortfolioCoreDay.Entities.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("PortfolioCoreDay.Entities.Education", b =>
                 {
@@ -118,6 +135,40 @@ namespace PortfolioCoreDay.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("PortfolioCoreDay.Entities.Portfolio", b =>
+                {
+                    b.Property<int>("PortfolioId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PortfolioId"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GithupUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PortfolioId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Portfolios");
+                });
+
             modelBuilder.Entity("PortfolioCoreDay.Entities.Service", b =>
                 {
                     b.Property<int>("ServiceId")
@@ -140,6 +191,26 @@ namespace PortfolioCoreDay.Migrations
                     b.HasKey("ServiceId");
 
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("PortfolioCoreDay.Entities.Skill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SkillValue")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("PortfolioCoreDay.Entities.Testimonial", b =>
@@ -169,6 +240,22 @@ namespace PortfolioCoreDay.Migrations
                     b.HasKey("TestimonialId");
 
                     b.ToTable("Testimonials");
+                });
+
+            modelBuilder.Entity("PortfolioCoreDay.Entities.Portfolio", b =>
+                {
+                    b.HasOne("PortfolioCoreDay.Entities.Category", "Category")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("PortfolioCoreDay.Entities.Category", b =>
+                {
+                    b.Navigation("Portfolios");
                 });
 #pragma warning restore 612, 618
         }
